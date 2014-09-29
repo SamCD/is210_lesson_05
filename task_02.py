@@ -7,72 +7,73 @@ import decimal
 RATE = None
 TOTAL = None
 
-def get_interest_rate(PRINCIPAL, DURATION, PREQUALIFICATION):
+def get_interest_rate(principal,duration,prequalification):
     """Calculates Interest rate)"""
-    RATE = None
-    if PRINCIPAL >= 0 and PRINCIPAL <= 199999:
-        if DURATION >= 1 and DURATION <= 15:
-            if PREQUALIFICATION:
-                RATE = '0.0363'
+    rate = None
+    if principal >= 0 and principal <= 199999:
+        if duration >= 1 and duration <= 15:
+            if prequalification:
+                rate = '0.0363'
             else:
-                RATE = '0.0465'
-        elif DURATION >= 16 and DURATION <= 20:
-            if PREQUALIFICATION:
-                RATE = '0.0404'
+                rate = '0.0465'
+        elif duration >= 16 and duration <= 20:
+            if prequalification:
+                rate = '0.0404'
             else:
-                RATE = '0.0498'
-        elif DURATION >= 21 and DURATION <= 30:
-            if PREQUALIFICATION:
-                RATE = '0.0577'
+                rate = '0.0498'
+        elif duration >= 21 and duration <= 30:
+            if prequalification:
+                rate = '0.0577'
             else:
-                RATE = '0.0639'
-    elif PRINCIPAL >= 200000 and PRINCIPAL <= 999999:
-        if DURATION >= 1 and DURATION <= 15:
-            if PREQUALIFICATION:
-                RATE = '0.0302'
+                rate = '0.0639'
+    elif principal >= 200000 and principal <= 999999:
+        if duration >= 1 and duration <= 15:
+            if prequalification:
+                rate = '0.0302'
             else:
-                RATE = '0.0398'
-        elif DURATION >= 16 and DURATION <= 20:
-            if PREQUALIFICATION:
-                RATE = '0.0327'
+                rate = '0.0398'
+        elif duration >= 16 and duration <= 20:
+            if prequalification:
+                rate = '0.0327'
             else:
-                RATE = '0.0408'
-        elif DURATION >= 21 and DURATION <= 30:
-            if PREQUALIFICATION:
-                RATE = '0.0466'
-    elif PRINCIPAL >= 1000000:
-        if DURATION >= 1 and DURATION <= 15:
-            if PREQUALIFICATION:
-                RATE = '0.0205'
-        elif DURATION >= 16 and DURATION <= 20:
-            if PREQUALIFICATION:
-                RATE = '0.0262'
-    if RATE is not None:
-        return decimal.Decimal(RATE)
+                rate = '0.0408'
+        elif duration >= 21 and duration <= 30:
+            if prequalification:
+                rate = '0.0466'
+    elif principal >= 1000000:
+        if duration >= 1 and duration <= 15:
+            if prequalification:
+                rate = '0.0205'
+        elif duration >= 16 and duration <= 20:
+            if prequalification:
+                rate = '0.0262'
+    if rate is not None:
+        return decimal.Decimal(rate)
     else:
         return None
 
-def compound_interest(PRINCIPAL, DURATION, RATE=None, INTERVAL=12):
+def compound_interest(principal, duration, rate=None, interval=12):
     """Calculates compound interest"""
-    if RATE is not None:
-        RATE = decimal.Decimal(RATE)
-        TOTAL = PRINCIPAL * ((1 + RATE / INTERVAL) ** (INTERVAL * DURATION))
-    return decimal.Decimal(TOTAL)
+    if rate is not None:
+        rate = decimal.Decimal(rate)
+        total = principal * ((1 + rate / interval) ** (interval * duration))
+    return decimal.Decimal(total)
 
-def calculate_total(PRINCIPAL,DURATION,PREQUALIFICATION):
+def calculate_total(principal,duration,prequalification):
     """Calculates total owed on a loan"""
-    RATE=get_interest_rate(PRINCIPAL,DURATION,PREQUALIFICATION)
-    if RATE is not None:
-        TOTAL = compound_interest(PRINCIPAL,DURATION,decimal.Decimal(RATE))
-        TOTAL = int(round(TOTAL))
-        return TOTAL
+    rate=get_interest_rate(principal,duration,prequalification)
+    if rate is not None:
+        total = compound_interest(principal,duration,decimal.Decimal(rate))
+        total = int(round(total))
+        return total
     else:
         return None
 
-def calculate_interest(PRINCIPAL,DURATION,PREQUALIFICATION):
-    TOTAL = calculate_total(PRINCIPAL,DURATION,PREQUALIFICATION)
-    if TOTAL is not None:
-        INTEREST=TOTAL - PRINCIPAL
-        return INTEREST
+def calculate_interest(principal,duration,prequalification):
+    """Calculates just the interest owed on a loan"""
+    total = calculate_total(principal,duration,prequalification)
+    if total is not None:
+        interest=total - principal
+        return interest
     else:
         return None
