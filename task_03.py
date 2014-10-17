@@ -3,23 +3,17 @@
 """Creates functions for converting between F and C"""
 
 def celsius_to_fahrenheit(temperature):
-    
     """Converts Celsius to Fahrenheit"""
-    
     tempf = ((9 * temperature) / 5) + 32
     return float(tempf)
 
 def fahrenheit_to_celsius(temperature):
-    
     """Converts Fahrenheit to Celsius"""
-    
     tempc = (5 * (temperature - 32)) / 9
     return float(tempc)
 
 def convert_temperature(temperature, output_format='c'):
-    
     """Conversion between Celsius and Fahrenheit"""
-    
     if str(output_format).lower() == 'c':
         if str(temperature)[-1].lower() == 'c':
             return float(temperature[:-1])
