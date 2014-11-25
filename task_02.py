@@ -7,6 +7,7 @@ import decimal
 RATE = None
 TOTAL = None
 
+
 def get_interest_rate(principal, duration, prequalification):
     """Calculates Interest rate)"""
     rate = None
@@ -48,9 +49,11 @@ def get_interest_rate(principal, duration, prequalification):
             if prequalification:
                 rate = '0.0262'
     if rate is not None:
-        return decimal.Decimal(rate)
+        ret = decimal.Decimal(rate)
     else:
-        return None
+        ret = None
+    return ret
+
 
 def compound_interest(principal, duration, rate=None, interval=12):
     """Calculates compound interest"""
@@ -59,21 +62,23 @@ def compound_interest(principal, duration, rate=None, interval=12):
         total = principal * ((1 + rate / interval) ** (interval * duration))
     return decimal.Decimal(total)
 
+
 def calculate_total(principal, duration, prequalification):
     """Calculates total owed on a loan"""
     rate = get_interest_rate(principal, duration, prequalification)
     if rate is not None:
         total = compound_interest(principal, duration, decimal.Decimal(rate))
         total = int(round(total))
-        return total
     else:
-        return None
+        total = None
+    return total
+
 
 def calculate_interest(principal, duration, prequalification):
     """Calculates just the interest owed on a loan"""
     total = calculate_total(principal, duration, prequalification)
     if total is not None:
         interest = total - principal
-        return interest
     else:
-        return None
+        interest = None
+    return interest
